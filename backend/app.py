@@ -2,7 +2,7 @@ import requests
 from flask import Flask, jsonify
 from flask_cors import CORS  # Enable CORS for cross-origin requests
 import requests
-from config import CLIENT_ID, CLIENT_SECRET, AUTHORITY_URL, GENERATE_EMBED_URL, REPORT_ID, WORKSPACE_ID
+from config import CLIENT_ID, CLIENT_SECRET, AUTHORITY_URL, GENERATE_EMBED_URL, REPORT_ID, DATASET_ID, EMBED_URL
 
 
 app = Flask(__name__)
@@ -31,12 +31,12 @@ def get_access_token():
     # Fetch the embed token
     embed_token_request_body = {
         "accessLevel": "view",
-        "datasets": ["7e26e446-b580-4363-9e4c-a28c58f0824e"],
+        "datasets": [DATASET_ID],
         "identities": [
             {
                 "username": "13026",
                 "roles": ["Admin"],
-                "datasets": ["7e26e446-b580-4363-9e4c-a28c58f0824e"]
+                "datasets": [DATASET_ID]
             }
         ]
     }
@@ -48,8 +48,7 @@ def get_access_token():
         # Return the required JSON structure
         return jsonify({
             'reportId': REPORT_ID,
-            'embedUrl': f"https://app.powerbi.com/reportEmbed?reportId={REPORT_ID}&groupId={WORKSPACE_ID}",
-            # https://app.powerbi.com/reportEmbed?reportId=48befd00-dc1b-4dcb-b6d1-b2a96fdbf20b&groupId=b623a39a-8d15-4f17-9ce0-fe96de2d0c37&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVLLVNPVVRILUMtUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d
+            'embedUrl': EMBED_URL,
             'accessToken': embed_token
         }), 200
     else:
