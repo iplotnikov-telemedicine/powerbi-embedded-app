@@ -1,0 +1,117 @@
+test*.py
+config.py
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.pid
+
+# Dependency directories
+node_modules/
+venv/
+env/
+__pycache__/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+
+# React build directory
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Cache and editor-related files
+.cache/
+.vscode/
+.idea/
+
+# Coverage reports
+coverage/
+
+# Next.js or CRA specific
+.next/
+
+
+# Bytecode and compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# Configuration files
+*.env
+settings_local.py  # If you have custom local settings
+
+# Data files
+*.sqlite3
+db.sqlite3
+
+# Cache and editor-related files
+.mypy_cache/
+pytest_cache/
+.vscode/
+.idea/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+
+# Flask specific
+instance/
+__pycache__/
+
+
+# Bytecode and compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# Configuration files
+*.env
+settings_local.py  # If you have custom local settings
+
+# Data files
+*.sqlite3
+db.sqlite3
+
+# Cache and editor-related files
+.mypy_cache/
+pytest_cache/
+.vscode/
+.idea/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+
+# Flask specific
+instance/
+__pycache__/
+
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.swp  # Vim swap files
+*.swo
