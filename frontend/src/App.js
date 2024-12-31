@@ -50,13 +50,15 @@ const App = () => {
     return (
         <div className="App">
             <h1>Embedded Power BI Report</h1>
-            <PowerBIEmbed
-                embedConfig={embedConfig}
-                cssClassName="report-style-class"
-                onLoad={() => console.log('Report loaded successfully')}
-                onError={(event) => console.error('Error embedding report:', event.detail)}
-                onRendered={() => console.log('Report rendered successfully')}
-            />
+            <div className="report-container">
+                <PowerBIEmbed
+                    embedConfig={embedConfig}
+                    cssClassName="report-style-class"
+                    onLoad={() => console.log('Report loaded successfully')}
+                    onError={(event) => console.error('Error embedding report:', event.detail)}
+                    onRendered={() => console.log('Report rendered successfully')}
+                />
+            </div>
         </div>
     );
 };
