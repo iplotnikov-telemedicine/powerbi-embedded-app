@@ -1,67 +1,59 @@
-import requests
-from flask import Flask, jsonify
-from flask_cors import CORS  # Enable CORS for cross-origin requests
-import requests
-from config import CLIENT_ID, CLIENT_SECRET, AUTHORITY_URL, GENERATE_EMBED_URL, REPORT_ID, DATASET_ID, EMBED_URL
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from auth import generate_embed_token, get_access_token
 
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)  # Enable CORS
+CORS(app, supports_credentials=True)
 
 
-@app.route('/api/report-details', methods=['GET'])
-def get_access_token():
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    body = {
-        'grant_type': 'client_credentials',
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'scope': 'https://analysis.windows.net/powerbi/api/.default'
-    }
+user_settings = {
+    'isRecruitmentReportEnabled': True
+}
 
-    response = requests.post(AUTHORITY_URL, data=body, headers=headers)
-    access_token = response.json().get('access_token')
 
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json'
-    }
-    # Fetch the embed token
-    embed_token_request_body = {
-        "accessLevel": "view",
-        "datasets": [DATASET_ID],
-        "identities": [
-            {
-                "username": "13026",
-                "roles": ["Admin"],
-                "datasets": [DATASET_ID]
-            }
-        ]
-    }
-    response = requests.post(GENERATE_EMBED_URL, headers=headers, json=embed_token_request_body)
-    print(response)
-    embed_token = response.json().get('token')
+@app.route('/api/user/settings', methods=['GET'])
+def get_user_settings():
+    return jsonify(user_settings)
 
-    if access_token:
-        # Return the required JSON structure
-        return jsonify({
-            'reportId': REPORT_ID,
-            'embedUrl': EMBED_URL,
-            'accessToken': embed_token
-        }), 200
-    else:
-        # Log the raw response for debugging
-        print("Response status:", response.status_code)
-        print("Response text:", response.text)
-        return jsonify({
-            'error': 'Failed to fetch token',
-            'status': response.status_code,
-            'details': response.text
-        }), response.status_code
 
+@app.route('/api/embedded-tokens', methods=['GET'])
+def get_embed_token():
+    report_id = request.args.get('reportId')
+    dataset_id = request.args.get('datasetId')
+    
+    if not report_id or not dataset_id:
+        error_message = 'Both reportId and datasetId are required'
+        print(f"Error: {error_message}")
+        return jsonify({'error': error_message}), 400
+
+    try:
+        embed_token = generate_embed_token(report_id, dataset_id)
+        return jsonify({'accessToken': embed_token}), 200
+    except Exception as e:
+        print(f"Error generating embed token: {str(e)}")
+        return jsonify({'error': 'Internal Server Error'}), 500
+
+    
+# @app.route('/api/report-details/<string:report_id>', methods=['GET'])
+# def get_report_details(report_id):
+#     # Fetch report configuration by ID
+#     report = REPORT_DETAILS.get(report_id)
+
+#     if not report:
+#         return jsonify({'message': 'Report not found'}), 404
+
+#     # Generate an embed token for the report
+#     embed_token = generate_embed_token(report['datasetId'])
+
+#     # Respond with report details and embed token
+#     return jsonify({
+#         'reportId': report['reportId'],
+#         'datasetId': report['datasetId'],
+#         'embedUrl': report['embedUrl'],
+#         'accessToken': embed_token
+#     }), 200
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, debug=True)
