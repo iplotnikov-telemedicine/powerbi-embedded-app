@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, Tab, Box, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 import Logo from './assets/logo.svg';
@@ -89,44 +89,44 @@ const App = () => {
                 const reports = [
                     {
                         reportName: 'Overview Dashboard',
-                        reportId: '4897aab3-ef46-466b-867b-23aa22b033b7',
-                        datasetId: 'c6c7d2c8-27be-4d0d-8ded-e4e5885234ea',
+                        reportId: '38e15711-7270-46bf-bedf-ec8c544bd8c4',
+                        datasetId: 'e1a1b12f-be58-46f6-8c29-aa220d33da74',
                         navContentPaneEnabled: false
                     },
                     {
                         reportName: 'Additional Information',
-                        reportId: '352db40b-5ff8-497a-9f94-93c6982b09f8',
-                        datasetId: '50fefb0c-d2b8-43c7-8680-d11e790d8827',
+                        reportId: 'ec6738bc-b7e7-483b-a699-d8769ce40359',
+                        datasetId: 'e1a1b12f-be58-46f6-8c29-aa220d33da74',
                         navContentPaneEnabled: false
                     },
                     {
                         reportName: 'Recruitment Report',
-                        reportId: 'd5731494-75b4-4321-967e-d85aff736e82',
-                        datasetId: '21a9d960-b45a-4f24-84da-d63c88d004d9',
+                        reportId: 'e13c1290-10cd-477a-92aa-e41d232aa8b1',
+                        datasetId: 'e1a1b12f-be58-46f6-8c29-aa220d33da74',
                         navContentPaneEnabled: false
                     },
                     {
                         reportName: 'Detailed Report',
-                        reportId: '859b41b3-81f1-4e59-a7f4-435c51a978b1',
-                        datasetId: 'b10b65cd-68f8-4360-8acf-3b338411c1e0',
+                        reportId: '2b8bba03-f61d-4acb-a76e-a9ab69d85f5f',
+                        datasetId: 'e1a1b12f-be58-46f6-8c29-aa220d33da74',
                         navContentPaneEnabled: false
                     },
                     {
                         reportName: 'Business Metrics',
-                        reportId: 'ec95beeb-b3a6-4a28-a95e-01d1e08f599b',
-                        datasetId: '047047e7-ca13-46c4-ac2d-6e8cf1ce4edb',
+                        reportId: '8b349589-7c29-44fe-92e5-465eed911328',
+                        datasetId: '76b0b299-6c4f-4b00-874f-819c819c5a86',
                         navContentPaneEnabled: false
                     },
                     {
                         reportName: 'Onboarding & Compliance',
-                        reportId: '48befd00-dc1b-4dcb-b6d1-b2a96fdbf20b',
-                        datasetId: '7e26e446-b580-4363-9e4c-a28c58f0824e',
+                        reportId: 'f57b98d0-5c30-491c-9da1-1d94887c1385',
+                        datasetId: '4536ad7b-f908-4899-9ee7-948619739aa5',
                         navContentPaneEnabled: true
                     },
                     {
                         reportName: 'Cera Report',
-                        reportId: 'c2a5cf8c-a33b-4759-b90d-68405d6d3d47',
-                        datasetId: 'afe11b3f-5fc7-4ffb-968e-602a710010c1',
+                        reportId: 'd03e28f5-26a1-487a-82e9-48092dfcfc4e',
+                        datasetId: '9063ee5b-98f2-4fbe-8f01-63c952787c19',
                         navContentPaneEnabled: false
                     },
                     
@@ -150,7 +150,7 @@ const App = () => {
                             reportName: report.reportName, // Include the report name
                             type: 'report',
                             id: report.reportId,
-                            embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=${report.reportId}',
+                            embedUrl: 'https://app.powerbi.com/reportEmbed',
                             viewMode: models.ViewMode.View,
                             accessToken: data.accessToken,
                             tokenType: models.TokenType.Embed,
@@ -204,8 +204,16 @@ const App = () => {
                         value={selectedTab} 
                         onChange={handleTabChange} 
                         aria-label="Power BI report tabs"
-                        sx={{ borderRight: 1, borderColor: 'divider' }}
+                        sx={{ borderRight: 1, borderColor: 'divider', backgroundColor: 'white' }}
                     >
+                        <Typography
+                            variant="body1" 
+                            sx={{
+                            fontWeight: 'bold',
+                                color: 'black', // Matches the style in the screenshot
+                                margin: 2, // Spacing below the text
+                            }}
+                        >Reports</Typography>
                         {embedConfigs.map((config, index) => (
                             <Tab 
                                 key={config.id} 
