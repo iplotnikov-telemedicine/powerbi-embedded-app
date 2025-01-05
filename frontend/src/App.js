@@ -200,7 +200,8 @@ const App = () => {
 
                 <ThemeProvider theme={theme}>
                     <Box>
-                        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Power BI report tabs">
+                        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Power BI report tabs"
+                            sx={{ marginLeft: '35px' }}>
                             {embedConfigs.map((config, index) => (
                                 <Tab key={config.id} label={config.reportName} />
                             ))}
