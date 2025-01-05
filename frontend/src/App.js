@@ -196,60 +196,38 @@ const App = () => {
             <div className="logo-container">
                 <img src={Logo} alt="App Logo" className="app-logo" />
             </div>
-            <ThemeProvider theme={theme}>
-                <Box sx={{ display: 'flex', height: '100vh', height: '100%' }}>
-                    <Tabs  
-                        orientation="vertical"
-                        variant="scrollable" 
-                        value={selectedTab} 
-                        onChange={handleTabChange} 
-                        aria-label="Power BI report tabs"
-                        sx={{ borderRight: 1, borderColor: 'divider', backgroundColor: 'white' }}
-                    >
-                        <Typography
-                            variant="body1" 
-                            sx={{
-                            fontWeight: 'bold',
-                                color: 'black', // Matches the style in the screenshot
-                                margin: 2, // Spacing below the text
-                            }}
-                        >Reports</Typography>
-                        {embedConfigs.map((config, index) => (
-                            <Tab 
-                                key={config.id} 
-                                label={config.reportName} 
-                                sx={{
-                                    alignItems: 'flex-start',
-                                    textAlign: 'left',
-                                }}
-                            />
-                        ))}
-                    </Tabs>
-                    <Box sx={{ flex: 1 }}>
-                        <div className="report-container">
-                            {embedConfigs.map((config, index) => (
-                                <div
-                                    key={config.id}
-                                    style={{
-                                        display: selectedTab === index ? 'block' : 'none',
-                                        width: '100%',
-                                        height: '100%', // Ensure it uses the full height
-                                    }}
-                                >
-                                    <PowerBIEmbed
-                                        embedConfig={config}
-                                        cssClassName="report-style-class"
-                                        onLoad={() => console.log('Report loaded successfully')}
-                                        onError={(event) => console.error('Error embedding report:', event.detail)}
-                                        onRendered={() => console.log('Report rendered successfully')}
-                                    />
-                                </div>
-                            ))}
-                        </div>
+            <Box sx={{ flex: 1 }}>
 
+                <ThemeProvider theme={theme}>
+                    <Box>
+                        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Power BI report tabs">
+                            {embedConfigs.map((config, index) => (
+                                <Tab key={config.id} label={config.reportName} />
+                            ))}
+                        </Tabs>
                     </Box>
-                </Box>
-            </ThemeProvider>
+                </ThemeProvider>
+                <div className="report-container">
+                    {embedConfigs.map((config, index) => (
+                        <div
+                            key={config.id}
+                            style={{
+                                display: selectedTab === index ? 'block' : 'none',
+                                width: '100%',
+                                height: '100%', // Ensure it uses the full height
+                            }}
+                        >
+                            <PowerBIEmbed
+                                embedConfig={config}
+                                cssClassName="report-style-class"
+                                onLoad={() => console.log('Report loaded successfully')}
+                                onError={(event) => console.error('Error embedding report:', event.detail)}
+                                onRendered={() => console.log('Report rendered successfully')}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </Box>
         </div>
     );
 };
